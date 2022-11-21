@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRUDTest.Application.Customers.Handlers
+namespace CRUDTest.Application.Customers.CommandHandlers
 {
     public class CreateCustomerHandler : IRequestHandler<CreateCustomerCommand, Customer>
     {
@@ -21,8 +21,9 @@ namespace CRUDTest.Application.Customers.Handlers
 
         public async Task<Customer> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var result = await _customerRepository.Add(request.Customer);
-            return result;
+            await _customerRepository.Create(request.Customer);
+            await _customerRepository.Save();
+            return request.Customer;
         }
     }
 }

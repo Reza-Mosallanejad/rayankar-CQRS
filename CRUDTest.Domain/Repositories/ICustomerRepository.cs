@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace CRUDTest.Domain.Repositories
 {
-    public interface ICustomerRepository
+    public interface ICustomerRepository : IBaseRepository<Customer>
     {
-        Task<List<Customer>> GetAll();
-
-        Task<Customer> Add(Customer model);
+        Task<Customer> GetByEmail(string email);
     }
 }

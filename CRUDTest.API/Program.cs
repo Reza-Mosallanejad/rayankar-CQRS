@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Dependency Injection
-DependencyInjector.Inject(builder.Services);
+DependencyInjector.Inject(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 

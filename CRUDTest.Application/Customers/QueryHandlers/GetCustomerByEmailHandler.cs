@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace CRUDTest.Application.Customers.Handlers
 {
-    public class GetAllCustomersHandler : IRequestHandler<GetAllCustomersQuery, List<Customer>>
+    public class GetCustomerByEmailHandler : IRequestHandler<GetCustomerByEmailQuery, Customer>
     {
         private ICustomerRepository _repository;
 
-        public GetAllCustomersHandler(ICustomerRepository repository)
+        public GetCustomerByEmailHandler(ICustomerRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<List<Customer>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
+        public async Task<Customer> Handle(GetCustomerByEmailQuery request, CancellationToken cancellationToken)
         {
-            return await _repository.GetAll();
+            return await _repository.GetByEmail(request.Email);
         }
     }
 }

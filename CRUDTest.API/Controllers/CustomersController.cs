@@ -19,21 +19,43 @@ namespace CRUDTest.API.Controllers
             _mediator = mediator;
         }
 
-        // GET: api/<Customers>
         [HttpGet]
-        public async Task<List<Customer>> GetAll()
+        public async Task<List<Customer>> GetAllCustomers()
         {
             var query = new GetAllCustomersQuery();
             var result = await _mediator.Send(query);
             return result;
         }
 
-        // POST api/<Customers>
+        [HttpGet]
+        public async Task<Customer> GetCustomerByEmail(string email)
+        {
+            var query = new GetCustomerByEmailQuery(email);
+            var result = await _mediator.Send(query);
+            return result;
+        }
+
         [HttpPost]
-        public async Task<Customer> Post([FromBody] Customer model)
+        public async Task<Customer> CreateCustomer(Customer model)
         {
             var command = new CreateCustomerCommand(model);
-            var result = await _mediator.Send<Customer>(command);
+            var result = await _mediator.Send(command);
+            return result;
+        }
+
+        [HttpPut]
+        public async Task<Customer> UpdateCustomer(Customer model)
+        {
+            var command = new UpdateCustomerCommand(model);
+            var result = await _mediator.Send(command);
+            return result;
+        }
+
+        [HttpDelete]
+        public async Task<bool> DeleteCustomerByEmail(string email)
+        {
+            var command = new DeleteCustomerByEmailCommand(email);
+            var result = await _mediator.Send(command);
             return result;
         }
 

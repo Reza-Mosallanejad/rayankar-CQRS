@@ -1,9 +1,11 @@
 ﻿using CRUDTest.Application;
-using CRUDTest.Data.DBContext;
+using CRUDTest.Data;
 using CRUDTest.Data.Repositories;
 using CRUDTest.Domain.DBContext;
 using CRUDTest.Domain.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,13 @@ namespace CRUDTest.IoC
 {
     public static class DependencyInjector
     {
-        public static void Inject(IServiceCollection services)
+        public static void Inject(IServiceCollection services, IConfiguration configuration)
         {
             //DBContext
-            services.AddSingleton<IDBContext, MyDBContext>();
+            services.AddDbContext<MyDBContext>(options =>
+            {
+                options.UseSqlServer(connectionString: configuration.GetConnectionString("Default"));
+            });
 
             //MediatR
             services.AddMediatR(typeof(MediatREntryPoint).Assembly);
