@@ -14,8 +14,6 @@ namespace CRUDTest.Data
     {
         public MyDBContext(DbContextOptions options) : base(options) { }
 
-        public MyDBContext() { }
-
         public List<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
