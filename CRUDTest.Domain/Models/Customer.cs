@@ -12,9 +12,9 @@ namespace CRUDTest.Domain.Models
 
         public string Lastname { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public ulong PhoneNumber { get; set; }
 
         public string Email { get; set; }
 

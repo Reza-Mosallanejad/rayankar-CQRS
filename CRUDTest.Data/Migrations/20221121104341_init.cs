@@ -20,7 +20,7 @@ namespace CRUDTest.Data.Migrations
                     Firstname = table.Column<string>(type: "varchar(150)", nullable: false),
                     Lastname = table.Column<string>(type: "varchar(150)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "date", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
                     Email = table.Column<string>(type: "varchar(150)", nullable: false),
                     BankAccountNumber = table.Column<string>(type: "varchar(12)", nullable: false)
                 },
@@ -33,6 +33,12 @@ namespace CRUDTest.Data.Migrations
                 name: "IX_Customer_Email",
                 table: "Customer",
                 column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Customer_Firstname_Lastname_DateOfBirth",
+                table: "Customer",
+                columns: new[] { "Firstname", "Lastname", "DateOfBirth" },
                 unique: true);
         }
 

@@ -49,13 +49,15 @@ namespace CRUDTest.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("PhoneNumber")
+                        .HasColumnType("decimal(20,0)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Firstname", "Lastname", "DateOfBirth")
                         .IsUnique();
 
                     b.ToTable("Customer");

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRUDTest.Data.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    [Migration("20221121053129_init")]
+    [Migration("20221121104341_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -52,13 +52,15 @@ namespace CRUDTest.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("PhoneNumber")
+                        .HasColumnType("decimal(20,0)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Firstname", "Lastname", "DateOfBirth")
                         .IsUnique();
 
                     b.ToTable("Customer");

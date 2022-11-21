@@ -1,11 +1,7 @@
-﻿using CRUDTest.Domain.Models;
+﻿using CRUDTest.Data.Utilities;
+using CRUDTest.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRUDTest.Data.MappingConfigurations
 {
@@ -31,6 +27,7 @@ namespace CRUDTest.Data.MappingConfigurations
 
             builder.Property(c => c.DateOfBirth)
                 .IsRequired()
+                .HasConversion<DateOnlyConverter, DateOnlyComparer>()
                 .HasColumnType("date");
 
             builder.Property(c => c.Email)
