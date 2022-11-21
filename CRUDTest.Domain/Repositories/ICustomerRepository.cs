@@ -9,6 +9,6 @@ namespace CRUDTest.Domain.Repositories
 {
     public interface ICustomerRepository : IBaseRepository<Customer>
     {
-        Task<Customer> GetByEmail(string email);
+        Task<Customer?> GetByEmail(string email);
     }
 }

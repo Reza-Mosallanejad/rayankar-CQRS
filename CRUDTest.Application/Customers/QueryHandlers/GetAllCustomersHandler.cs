@@ -16,7 +16,7 @@ namespace CRUDTest.Application.Customers.QueryHandlers
 
         public async Task<List<Customer>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
         {
-            return await Task.FromResult(_repository.All.ToList());
+            return await _repository.All.ToList();
         }
     }
 }

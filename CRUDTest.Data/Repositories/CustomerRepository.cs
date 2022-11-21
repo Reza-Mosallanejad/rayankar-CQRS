@@ -21,7 +21,7 @@ namespace CRUDTest.Data.Repositories
             _dBSet = _dBContext.Set<Customer>();
         }
 
-        public async Task<Customer> GetByEmail(string email)
+        public async Task<Customer?> GetByEmail(string email)
         {
             return await _dBSet.FirstOrDefaultAsync(c => c.Email == email);
         }

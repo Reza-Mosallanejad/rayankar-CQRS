@@ -21,26 +21,31 @@ namespace CRUDTest.Data.Repositories
             _dbSet = _dBContext.Set<TModel>();
         }
 
-        public IQueryable<TModel> All => _dbSet.AsQueryable();
-
-        public async Task Create(TModel model)
+        public async Task Save()
         {
-            await _dbSet.AddAsync(model);
+            await _dBContext.SaveChangesAsync();
         }
 
-        public async Task Update(TModel model)
+        public IQueryable<TModel> All => _dbSet.AsQueryable();
+
+        public async Task<TModel> Create(TModel model)
         {
-            await Task.FromResult(_dbSet.Update(model));
+            await _dbSet.AddAsync(model);
+            await Save();
+            return model;
+        }
+
+        public async Task<TModel> Update(TModel model)
+        {
+            _dbSet.Update(model);
+            await Save();
+            return model;
         }
 
         public async Task Delete(TModel model)
         {
-            await Task.FromResult(_dbSet.Remove(model));
-        }
-
-        public async Task Save()
-        {
-            await _dBContext.SaveChangesAsync();
+            _dbSet.Remove(model);
+            await Save();
         }
 
     }

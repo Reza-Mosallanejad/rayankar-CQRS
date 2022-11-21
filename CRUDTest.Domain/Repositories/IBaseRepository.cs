@@ -11,9 +11,9 @@ namespace CRUDTest.Domain.Repositories
     {
         IQueryable<TModel> All { get; }
 
-        Task Create(TModel model);
+        Task<TModel> Create(TModel model);
 
-        Task Update(TModel model);
+        Task<TModel> Update(TModel model);
 
         Task Delete(TModel model);
 
