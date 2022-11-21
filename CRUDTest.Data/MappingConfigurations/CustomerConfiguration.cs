@@ -18,6 +18,9 @@ namespace CRUDTest.Data.MappingConfigurations
             builder.HasIndex(c => c.Email)
                 .IsUnique();
 
+            builder.HasIndex(c => new { c.Firstname, c.Lastname, c.DateOfBirth })
+                .IsUnique();
+
             builder.Property(c => c.Firstname)
                 .IsRequired()
                 .HasColumnType("varchar(150)");
