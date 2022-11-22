@@ -9,5 +9,12 @@ using System.Threading.Tasks;
 
 namespace CRUDTest.Application.Customers.Commands
 {
-    public record CreateCustomerCommand(CustomerDTO CustomerDTO) : IRequest<OperationResult<CustomerDTO>>;
+    public class CreateCustomerCommand : IRequest<OperationResult<CustomerDTO>>
+    {
+        public CustomerDTO CustomerDTO { get; set; }
+        public CreateCustomerCommand(CustomerDTO customerDTO)
+        {
+            CustomerDTO = customerDTO;
+        }
+    }
 }

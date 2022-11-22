@@ -3,5 +3,13 @@ using MediatR;
 
 namespace CRUDTest.Application.Customers.Queries
 {
-    public record GetCustomerByEmailQuery(string Email) : IRequest<CustomerDTO>;
+    public class GetCustomerByEmailQuery : IRequest<CustomerDTO>
+    {
+        public string Email { get; set; }
+
+        public GetCustomerByEmailQuery(string email)
+        {
+            Email = email;
+        }
+    }
 }

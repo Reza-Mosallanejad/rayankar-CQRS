@@ -9,5 +9,13 @@ using System.Threading.Tasks;
 
 namespace CRUDTest.Application.Customers.Commands
 {
-    public record DeleteCustomerByEmailCommand(string Email) : IRequest<OperationResult<CustomerDTO>>;
+    public class DeleteCustomerByEmailCommand : IRequest<OperationResult<CustomerDTO>>
+    {
+        public string Email { get; set; }
+
+        public DeleteCustomerByEmailCommand(string email)
+        {
+            Email = email;
+        }
+    }
 }

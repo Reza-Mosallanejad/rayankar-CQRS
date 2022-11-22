@@ -3,5 +3,7 @@ using MediatR;
 
 namespace CRUDTest.Application.Customers.Queries
 {
-    public record GetAllCustomersQuery : IRequest<List<CustomerDTO>>;
+    public class GetAllCustomersRequest : IRequest<List<CustomerDTO>>
+    {
+    }
 }
