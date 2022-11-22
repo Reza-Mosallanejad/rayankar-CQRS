@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using CRUDTest.Application.Customers.Commands;
+using CRUDTest.Application.Utilities;
 using CRUDTest.Domain.DTOs;
 using CRUDTest.Domain.Models;
 using CRUDTest.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRUDTest.Application.Customers.CommandHandlers
 {
@@ -34,6 +30,14 @@ namespace CRUDTest.Application.Customers.CommandHandlers
             };
             try
             {
+                request.CustomerDTO.Email = request.CustomerDTO.Email.ToLower();
+
+                if (!PhonenumberValidator.Validate(request.CustomerDTO.PhoneNumber))
+                {
+                    opr.Failed("Phone number is not valid");
+                    return opr;
+                }
+
                 var customer = _mapper.Map<Customer>(request.CustomerDTO);
                 await _customerRepository.Update(customer);
                 var customerDTO = _mapper.Map<CustomerDTO>(customer);

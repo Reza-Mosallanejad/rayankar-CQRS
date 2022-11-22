@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
 using CRUDTest.Application.Customers.Queries;
 using CRUDTest.Domain.DTOs;
-using CRUDTest.Domain.Models;
 using CRUDTest.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRUDTest.Application.Customers.Handlers
 {
@@ -30,7 +24,7 @@ namespace CRUDTest.Application.Customers.Handlers
         {
             try
             {
-                var customer = await _repository.GetByEmail(request.Email);
+                var customer = await _repository.GetByEmail(request.Email.ToLower());
                 if (customer == null)
                     return null;
                 else
@@ -39,7 +33,7 @@ namespace CRUDTest.Application.Customers.Handlers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return new CustomerDTO();
+                return null;
             }
         }
     }

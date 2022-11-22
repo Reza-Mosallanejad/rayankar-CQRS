@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
 using CRUDTest.Application.Customers.Commands;
 using CRUDTest.Domain.DTOs;
-using CRUDTest.Domain.Models;
 using CRUDTest.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRUDTest.Application.Customers.CommandHandlers
 {
@@ -31,7 +25,7 @@ namespace CRUDTest.Application.Customers.CommandHandlers
             var opr = new OperationResult<CustomerDTO>();
             try
             {
-                var customer = await _customerRepository.GetByEmail(request.Email);
+                var customer = await _customerRepository.GetByEmail(request.Email.ToLower());
                 if (customer != null)
                 {
                     var customerDTO = _mapper.Map<CustomerDTO>(customer);
