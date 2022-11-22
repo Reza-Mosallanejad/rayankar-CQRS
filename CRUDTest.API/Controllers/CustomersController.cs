@@ -1,5 +1,6 @@
 ﻿using CRUDTest.Application.Customers.Commands;
 using CRUDTest.Application.Customers.Queries;
+using CRUDTest.Domain.DTOs;
 using CRUDTest.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,44 +20,56 @@ namespace CRUDTest.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<List<Customer>> GetAllCustomers()
+        [HttpGet("GetAll")]
+        public async Task<List<CustomerDTO>> GetAllCustomers()
         {
             var query = new GetAllCustomersQuery();
             var result = await _mediator.Send(query);
             return result;
         }
 
-        [HttpGet]
-        public async Task<Customer> GetCustomerByEmail(string email)
+        [HttpGet("GetByEmail")]
+        public async Task<CustomerDTO> GetCustomerByEmail(string email)
         {
             var query = new GetCustomerByEmailQuery(email);
             var result = await _mediator.Send(query);
             return result;
         }
 
-        [HttpPost]
-        public async Task<Customer> CreateCustomer(Customer model)
+        [HttpPost("Create")]
+        public async Task<IActionResult> CreateCustomer(CustomerDTO model)
         {
             var command = new CreateCustomerCommand(model);
-            var result = await _mediator.Send(command);
-            return result;
+            var opr = await _mediator.Send(command);
+
+            if (opr.Status)
+                return Ok(opr.Result);
+            else
+                return BadRequest(opr.Message);
         }
 
-        [HttpPut]
-        public async Task<Customer> UpdateCustomer(Customer model)
+        [HttpPut("Update")]
+        public async Task<IActionResult> UpdateCustomer(CustomerDTO model)
         {
             var command = new UpdateCustomerCommand(model);
-            var result = await _mediator.Send(command);
-            return result;
+            var opr = await _mediator.Send(command);
+
+            if (opr.Status)
+                return Ok(opr.Result);
+            else
+                return BadRequest(opr.Message);
         }
 
-        [HttpDelete]
-        public async Task<bool> DeleteCustomerByEmail(string email)
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> DeleteCustomerByEmail(string email)
         {
             var command = new DeleteCustomerByEmailCommand(email);
-            var result = await _mediator.Send(command);
-            return result;
+            var opr = await _mediator.Send(command);
+
+            if (opr.Status)
+                return Ok(opr.Result);
+            else
+                return BadRequest(opr.Message);
         }
 
     }

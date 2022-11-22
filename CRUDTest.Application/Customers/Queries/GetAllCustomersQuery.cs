@@ -1,13 +1,7 @@
-﻿using CRUDTest.Domain.Models;
+﻿using CRUDTest.Domain.DTOs;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRUDTest.Application.Customers.Queries
 {
-    public record GetAllCustomersQuery : IRequest<List<Customer>>;
-
+    public record GetAllCustomersQuery : IRequest<List<CustomerDTO>>;
 }

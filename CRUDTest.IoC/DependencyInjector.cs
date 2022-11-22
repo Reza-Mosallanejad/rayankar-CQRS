@@ -1,4 +1,5 @@
 ﻿using CRUDTest.Application;
+using CRUDTest.Application.Mapper;
 using CRUDTest.Data;
 using CRUDTest.Data.Repositories;
 using CRUDTest.Domain.DBContext;
@@ -31,6 +32,11 @@ namespace CRUDTest.IoC
             //Repositories
             services.AddScoped<ICustomerRepository, CustomerRepository>();
 
+            //AutoMapper
+            services.AddAutoMapper(options =>
+            {
+                options.AddProfile(new MapperProfile());
+            }, typeof(MediatREntryPoint));
 
         }
     }

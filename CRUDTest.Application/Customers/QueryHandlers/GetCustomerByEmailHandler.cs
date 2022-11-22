@@ -1,4 +1,6 @@
-﻿using CRUDTest.Application.Customers.Queries;
+﻿using AutoMapper;
+using CRUDTest.Application.Customers.Queries;
+using CRUDTest.Domain.DTOs;
 using CRUDTest.Domain.Models;
 using CRUDTest.Domain.Repositories;
 using MediatR;
@@ -10,18 +12,21 @@ using System.Threading.Tasks;
 
 namespace CRUDTest.Application.Customers.Handlers
 {
-    public class GetCustomerByEmailHandler : IRequestHandler<GetCustomerByEmailQuery, Customer>
+    public class GetCustomerByEmailHandler : IRequestHandler<GetCustomerByEmailQuery, CustomerDTO>
     {
         private ICustomerRepository _repository;
+        private readonly IMapper _mapper;
 
-        public GetCustomerByEmailHandler(ICustomerRepository repository)
+        public GetCustomerByEmailHandler(ICustomerRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<Customer> Handle(GetCustomerByEmailQuery request, CancellationToken cancellationToken)
+        public async Task<CustomerDTO> Handle(GetCustomerByEmailQuery request, CancellationToken cancellationToken)
         {
-            return await _repository.GetByEmail(request.Email);
+            var customer = await _repository.GetByEmail(request.Email);
+            return _mapper.Map<CustomerDTO>(customer);
         }
     }
 }
