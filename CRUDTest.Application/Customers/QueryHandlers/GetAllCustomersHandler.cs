@@ -4,6 +4,7 @@ using CRUDTest.Domain.DTOs;
 using CRUDTest.Domain.Models;
 using CRUDTest.Domain.Repositories;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace CRUDTest.Application.Customers.QueryHandlers
 {
@@ -11,17 +12,27 @@ namespace CRUDTest.Application.Customers.QueryHandlers
     {
         private ICustomerRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger<GetAllCustomersHandler> _logger;
 
-        public GetAllCustomersHandler(ICustomerRepository repository, IMapper mapper)
+        public GetAllCustomersHandler(ICustomerRepository repository, IMapper mapper, ILogger<GetAllCustomersHandler> logger)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<List<CustomerDTO>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
         {
-            var customers = _repository.All.ToList();
-            return _mapper.Map<List<CustomerDTO>>(customers);
+            try
+            {
+                var customers = _repository.All.ToList();
+                return _mapper.Map<List<CustomerDTO>>(customers);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new List<CustomerDTO>();
+            }
         }
     }
 }

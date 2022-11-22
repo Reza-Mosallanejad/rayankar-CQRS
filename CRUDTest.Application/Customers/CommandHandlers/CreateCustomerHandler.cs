@@ -4,6 +4,7 @@ using CRUDTest.Domain.DTOs;
 using CRUDTest.Domain.Models;
 using CRUDTest.Domain.Repositories;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,21 +17,31 @@ namespace CRUDTest.Application.Customers.CommandHandlers
     {
         private ICustomerRepository _customerRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<CreateCustomerHandler> _logger;
 
-        public CreateCustomerHandler(ICustomerRepository customerRepository, IMapper mapper)
+        public CreateCustomerHandler(ICustomerRepository customerRepository, IMapper mapper, ILogger<CreateCustomerHandler> logger)
         {
             _customerRepository = customerRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<OperationResult<CustomerDTO>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
             var opr = new OperationResult<CustomerDTO>();
-            var customer = _mapper.Map<Customer>(request.CustomerDTO);
-            await _customerRepository.Create(customer);
-            await _customerRepository.Save();
-            var customerDTO = _mapper.Map<CustomerDTO>(customer);
-            opr.Result = customerDTO;
+            opr.Result = request.CustomerDTO;
+            try
+            {
+                var customer = _mapper.Map<Customer>(request.CustomerDTO);
+                await _customerRepository.Create(customer);
+                var customerDTO = _mapper.Map<CustomerDTO>(customer);
+                opr.Result = customerDTO;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                opr.Failed();
+            }
             return opr;
         }
     }
