@@ -28,8 +28,10 @@ namespace CRUDTest.Application.Customers.CommandHandlers
 
         public async Task<OperationResult<CustomerDTO>> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var opr = new OperationResult<CustomerDTO>();
-            opr.Result = request.CustomerDTO;
+            var opr = new OperationResult<CustomerDTO>
+            {
+                Result = request.CustomerDTO
+            };
             try
             {
                 var customer = _mapper.Map<Customer>(request.CustomerDTO);

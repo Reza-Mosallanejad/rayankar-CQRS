@@ -11,7 +11,7 @@ namespace CRUDTest.Application.Customers.Commands
 {
     public class UpdateCustomerCommand : IRequest<OperationResult<CustomerDTO>>
     {
-        public CustomerDTO CustomerDTO { get; set; }
+        public CustomerDTO CustomerDTO { get; }
 
         public UpdateCustomerCommand(CustomerDTO customerDTO)
         {

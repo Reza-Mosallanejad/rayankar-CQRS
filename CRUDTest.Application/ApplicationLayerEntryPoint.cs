@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CRUDTest.Application
 {
-    public class MediatREntryPoint
+    public class ApplicationLayerEntryPoint
     {
     }
 }

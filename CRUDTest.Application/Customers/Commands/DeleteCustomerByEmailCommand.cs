@@ -11,7 +11,7 @@ namespace CRUDTest.Application.Customers.Commands
 {
     public class DeleteCustomerByEmailCommand : IRequest<OperationResult<CustomerDTO>>
     {
-        public string Email { get; set; }
+        public string Email { get; }
 
         public DeleteCustomerByEmailCommand(string email)
         {

@@ -25,10 +25,22 @@ namespace CRUDTest.Domain.DTOs
             Message = SuccessMsg;
         }
 
+        public void Succeed(string msg)
+        {
+            Status = true;
+            Message = msg;
+        }
+
         public void Failed()
         {
             Status = false;
             Message = FailMsg;
+        }
+
+        public void Failed(string msg)
+        {
+            Status = false;
+            Message = msg;
         }
 
     }

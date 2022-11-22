@@ -27,7 +27,7 @@ namespace CRUDTest.IoC
             });
 
             //MediatR
-            services.AddMediatR(typeof(MediatREntryPoint).Assembly);
+            services.AddMediatR(typeof(ApplicationLayerEntryPoint).Assembly);
 
             //Repositories
             services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -36,7 +36,7 @@ namespace CRUDTest.IoC
             services.AddAutoMapper(options =>
             {
                 options.AddProfile(new MapperProfile());
-            }, typeof(MediatREntryPoint));
+            }, typeof(ApplicationLayerEntryPoint));
 
         }
     }

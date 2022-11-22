@@ -19,55 +19,40 @@ namespace CRUDTest.API.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<List<CustomerDTO>> GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers()
         {
             var query = new GetAllCustomersQuery();
             var result = await _mediator.Send(query);
-            return result;
+            return Ok(result);
         }
 
         [HttpGet("GetByEmail")]
-        public async Task<CustomerDTO> GetCustomerByEmail(string email)
+        public async Task<IActionResult> GetCustomerByEmail(string email)
         {
             var query = new GetCustomerByEmailQuery(email);
             var result = await _mediator.Send(query);
-            return result;
+            return result != null ? Ok(result) : NotFound();
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateCustomer(CustomerDTO model)
+        public async Task<IActionResult> CreateCustomer(CreateCustomerCommand command)
         {
-            var command = new CreateCustomerCommand(model);
             var opr = await _mediator.Send(command);
-
-            if (opr.Status)
-                return Ok(opr.Result);
-            else
-                return BadRequest(opr.Message);
+            return opr.Status ? Ok(opr.Result) : BadRequest(opr.Message);
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> UpdateCustomer(CustomerDTO model)
+        public async Task<IActionResult> UpdateCustomer(UpdateCustomerCommand command)
         {
-            var command = new UpdateCustomerCommand(model);
             var opr = await _mediator.Send(command);
-
-            if (opr.Status)
-                return Ok(opr.Result);
-            else
-                return BadRequest(opr.Message);
+            return opr.Status ? Ok(opr.Result) : BadRequest(opr.Message);
         }
 
         [HttpDelete("Delete")]
-        public async Task<IActionResult> DeleteCustomerByEmail(string email)
+        public async Task<IActionResult> DeleteCustomerByEmail(DeleteCustomerByEmailCommand command)
         {
-            var command = new DeleteCustomerByEmailCommand(email);
             var opr = await _mediator.Send(command);
-
-            if (opr.Status)
-                return Ok(opr.Result);
-            else
-                return BadRequest(opr.Message);
+            return opr.Status ? Ok(opr.Result) : BadRequest(opr.Message);
         }
 
     }

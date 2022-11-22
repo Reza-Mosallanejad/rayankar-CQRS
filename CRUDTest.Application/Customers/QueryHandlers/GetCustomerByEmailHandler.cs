@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CRUDTest.Application.Customers.Handlers
 {
-    public class GetCustomerByEmailHandler : IRequestHandler<GetCustomerByEmailQuery, CustomerDTO>
+    public class GetCustomerByEmailHandler : IRequestHandler<GetCustomerByEmailQuery, CustomerDTO?>
     {
         private ICustomerRepository _repository;
         private readonly IMapper _mapper;
@@ -26,12 +26,15 @@ namespace CRUDTest.Application.Customers.Handlers
             _logger = logger;
         }
 
-        public async Task<CustomerDTO> Handle(GetCustomerByEmailQuery request, CancellationToken cancellationToken)
+        public async Task<CustomerDTO?> Handle(GetCustomerByEmailQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 var customer = await _repository.GetByEmail(request.Email);
-                return _mapper.Map<CustomerDTO>(customer);
+                if (customer == null)
+                    return null;
+                else
+                    return _mapper.Map<CustomerDTO>(customer);
             }
             catch (Exception ex)
             {

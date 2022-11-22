@@ -32,9 +32,16 @@ namespace CRUDTest.Application.Customers.CommandHandlers
             try
             {
                 var customer = await _customerRepository.GetByEmail(request.Email);
-                var customerDTO = _mapper.Map<CustomerDTO>(customer);
-                await _customerRepository.Delete(customer);
-                opr.Result = customerDTO;
+                if (customer != null)
+                {
+                    var customerDTO = _mapper.Map<CustomerDTO>(customer);
+                    opr.Result = customerDTO;
+                    await _customerRepository.Delete(customer);
+                }
+                else
+                {
+                    opr.Failed("Not Found");
+                }
             }
             catch (Exception ex)
             {
