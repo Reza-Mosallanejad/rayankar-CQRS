@@ -24,7 +24,7 @@ namespace CRUDTest.Application.Customers.Handlers
         {
             try
             {
-                var customer = await _repository.GetByEmail(request.Email.ToLower());
+                var customer = await _repository.GetByEmail(request.Email.Trim().ToLower());
                 if (customer == null)
                     return null;
                 else

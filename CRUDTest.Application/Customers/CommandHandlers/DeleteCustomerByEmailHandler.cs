@@ -25,7 +25,7 @@ namespace CRUDTest.Application.Customers.CommandHandlers
             var opr = new OperationResult<CustomerDTO>();
             try
             {
-                var customer = await _customerRepository.GetByEmail(request.Email.ToLower());
+                var customer = await _customerRepository.GetByEmail(request.Email.Trim().ToLower());
                 if (customer != null)
                 {
                     var customerDTO = _mapper.Map<CustomerDTO>(customer);

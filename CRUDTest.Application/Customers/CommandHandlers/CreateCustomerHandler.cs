@@ -30,7 +30,7 @@ namespace CRUDTest.Application.Customers.CommandHandlers
             };
             try
             {
-                request.CustomerDTO.Email = request.CustomerDTO.Email.ToLower();
+                request.CustomerDTO.Email = request.CustomerDTO.Email.Trim().ToLower();
 
                 if (!PhonenumberValidator.Validate(request.CustomerDTO.PhoneNumber))
                 {
